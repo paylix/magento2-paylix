@@ -1,0 +1,57 @@
+<?php
+$itemId = $block->getProductId();
+$config = $block->getConfig();
+?>
+<button id="paylixbtn" type="button">Pay with Paylix</button>
+
+<script type="text/javascript">
+  require(['jquery', 'jquery/ui'], function ($) {
+    $.fn.serializeFormJSON = function () {
+
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function () {
+        if (o[this.name]) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || '');
+        } else {
+          o[this.name] = this.value || '';
+        }
+      });
+      return o;
+    };
+    var payl = new Paylix({
+      button: 'paylixbtn',
+      bindClick: false,
+      pkey: '<?php echo $config['key'] ?>',
+      dataSource: '<?php echo $config['url'] ?>paylix/cart/submit',
+      additionalData: {productId: <?php echo $block->getProductId(); ?>, qty: 1}
+    });
+
+
+    $('#paylixbtn').click(function (e) {
+      var form = $('#<?php echo $config['formId'] ?>');
+      if (form.valid()) {
+        var data = form.serializeFormJSON();
+        payl.updateadditionalData(data)
+        payl.btnClick();
+      }
+    })
+
+
+
+  });
+</script>
+<!--<script>
+  require([
+    'Magento_Customer/js/customer-data'
+  ], function (customerData) {
+    var sections = ['cart'];
+    customerData.invalidate(sections);
+  });
+</script>-->
+
+
+

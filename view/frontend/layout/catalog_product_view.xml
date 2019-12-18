@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="http://10.20.0.73/paylix.js" src_type="url"></script>
+    </head>
+    <body>
+        <referenceBlock name="product.info.addtocart.additional">
+            <block class="Paylix\Pay\Block\Product\ProductPage"
+                   name="product.paywithpaylix.cofig" before="-"
+                   ifconfig="payment/paylix_pay/active"
+                   template="Paylix_Pay::pay_with_paylix.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="product.info.addtocart">
+            <block class="Paylix\Pay\Block\Product\ProductPage"
+                   name="product.paywithpaylix.list" before="-"
+                   ifconfig="payment/paylix_pay/active"
+                   template="Paylix_Pay::pay_with_paylix.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

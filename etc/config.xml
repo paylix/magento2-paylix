@@ -1,0 +1,21 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <paylix_pay>
+                <title>Paylix</title>
+                <model>Paylix\Pay\Model\PaymentMethod</model>
+                <active>1</active>
+                <order_status>processing</order_status>
+                <addtocart_id>product_addtocart_form</addtocart_id>
+
+                <pending>pending</pending>
+                <processing>processing</processing>
+                <completed>complete</completed>
+                <on_hold>holded</on_hold>
+                <cancelled>canceled</cancelled>
+                <refunded>closed</refunded>
+                <failed>canceled</failed>
+            </paylix_pay>
+        </payment>
+    </default>
+</config>

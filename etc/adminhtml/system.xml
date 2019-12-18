@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="paylix_pay" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Paylix Pay</label>
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="public_key" translate="public key" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>merchant public key</label>
+                </field>
+                <field id="secret" translate="public key" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>merchant secret</label>
+                </field>
+                <field id="addtocart_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Addtocart form Id</label>
+                    <comment>Enter addtocart form id for product view page(Ex. product_addtocart_form)</comment>
+                </field>
+
+                <field id="test" type="label"  sortOrder="90" showInDefault="1"  translate="note"  showInWebsite="1" showInStore="1">
+                    <label>Paylix Statuses: </label>
+                    <comment>Map Paylix Order statuses with magento statuses</comment>
+                </field>
+
+                <field id="pending" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Pending</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+
+                <field id="processing" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Processing</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+                <field id="completed" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Completed</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+                <field id="on_hold" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> On Hold</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+                <field id="cancelled" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Cancelled</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+                <field id="refunded" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Refunded</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+                <field id="failed" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Failed</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                </field>
+
+            </group>
+        </section>
+    </system>
+</config>
