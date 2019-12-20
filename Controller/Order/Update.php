@@ -93,7 +93,7 @@ class Update extends Action implements \Magento\Framework\App\CsrfAwareActionInt
                 }
             } elseif ($req['status'] == 'cancelled') {
                 $orderState = Order::STATE_CANCELED;
-                $order->setState($orderState)->setStatus(Order::STATE_PROCESSING);
+                $order->setState($orderState)->setStatus(Order::STATE_CANCELED);
                 $order->save();
             }
 
@@ -113,7 +113,19 @@ class Update extends Action implements \Magento\Framework\App\CsrfAwareActionInt
     /** * @inheritDoc */
     public function validateForCsrf(RequestInterface $request): ?bool
     {
-        return true;
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $request = $objectManager->get('Magento\Framework\App\RequestInterface');
+
+        $req = json_decode($request->getContent(), true);
+
+        $config = $objectManager->get('\Magento\Framework\App\Config\ScopeConfigInterface');
+        $secret = $config->getValue('payment/paylix_pay/secret');
+
+        if ($req['secret'] == $secret) {
+            return true;
+        }
+        return false;
+
     }
 }
 
