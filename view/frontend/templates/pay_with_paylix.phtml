@@ -5,7 +5,8 @@ $config = $block->getConfig();
 <button id="paylixbtn" type="button">Pay with Paylix</button>
 
 <script type="text/javascript">
-  require(['jquery', 'jquery/ui'], function ($) {
+  require(['jquery',
+    'Magento_Customer/js/customer-data'], function ($, customerData) {
     $.fn.serializeFormJSON = function () {
 
       var o = {};
@@ -27,7 +28,12 @@ $config = $block->getConfig();
       bindClick: false,
       pkey: '<?php echo $config['key'] ?>',
       dataSource: '<?php echo $config['url'] ?>paylix/cart/submit',
-      additionalData: {productId: <?php echo $block->getProductId(); ?>, qty: 1}
+      additionalData: {productId: <?php echo $block->getProductId(); ?>, qty: 1},
+      ajaxCallback: function (data) {
+        var sections = ['cart'];
+        customerData.invalidate(sections);
+        customerData.reload(sections, true);
+      }
     });
 
 
