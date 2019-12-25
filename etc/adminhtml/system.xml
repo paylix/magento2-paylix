@@ -53,7 +53,18 @@
                     <label> Failed</label>
                     <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
                 </field>
-
+                <field id="test2" type="label"  sortOrder="200" showInDefault="1"  translate="note"  showInWebsite="1" showInStore="1">
+                    <label>Paylix Shipping: </label>
+                    <comment>Map Paylix Shipping statuses with magento statuses</comment>
+                </field>
+                <field id="shipping_regular" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Regular Shipping</label>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allmethods</source_model>
+                </field>
+                <field id="shipping_express" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Express Shipping</label>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allmethods</source_model>
+                </field>
             </group>
         </section>
     </system>

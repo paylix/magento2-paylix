@@ -10,6 +10,7 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
+use Magento\Setup\Exception;
 
 
 class Submit extends Action implements \Magento\Framework\App\CsrfAwareActionInterface
@@ -75,8 +76,19 @@ class Submit extends Action implements \Magento\Framework\App\CsrfAwareActionInt
             //$params['form_key'] = $formKey->getFormKey();
 
             $productData = $product->load($productId);
-            $cart->addProduct($productData, $params);
-            $cart->save();
+            /*
+                        //check if quantity is available
+                        $stockItem = $objectManager->get('\Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku');
+
+                        $productStock = $stockItem->execute($productData->getSku());
+                        var_dump($productStock->getData(), $params);
+                        return;*/
+            try {
+                $cart->addProduct($productData, $params);
+                $cart->save();
+            } catch (\Exception $e) {
+                return $resultJson->setData(['success' => false, 'message' =>  $e->getMessage()]);
+            }
         }
         //return $resultJson->setData($tmp);
 
@@ -147,8 +159,8 @@ class Submit extends Action implements \Magento\Framework\App\CsrfAwareActionInt
                     ->setIsDefaultShipping('1')
                     ->setSaveInAddressBook('1');
                 $customAddress->save();
-            } catch (Exception $e) {
-                echo $e->getMessage();
+            } catch (\Exception $e) {
+                return $resultJson->setData(['success' => false, 'message' =>  $e->getMessage()]);
             }
         }
 
@@ -234,7 +246,7 @@ class Submit extends Action implements \Magento\Framework\App\CsrfAwareActionInt
                 $shippingAddress = $quoteFactory->getShippingAddress();
                 $shippingAddress->setCollectShippingRates(true)
                     ->collectShippingRates()
-                    ->setShippingMethod('flatrate_flatrate'); //shipping method
+                    ->setShippingMethod($config->getValue('payment/paylix_pay/shipping_regular')); //shipping method
             }
 
             $quoteFactory->setPaymentMethod('paylix_pay'); //payment method
@@ -266,8 +278,8 @@ class Submit extends Action implements \Magento\Framework\App\CsrfAwareActionInt
                 return $resultJson->setData(['success' => false, 'message' => 'Could not creat Order']);
             }
 
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        } catch (\Exception $e) {
+            return $resultJson->setData(['success' => false, 'message' =>  $e->getMessage()]);
         }
 
         $remote = $objectManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
