@@ -28,6 +28,7 @@ class Update extends Action implements \Magento\Framework\App\CsrfAwareActionInt
         $JsonFactory = $objectManager->get('\Magento\Framework\Controller\Result\JsonFactory');
         $resultJson = $JsonFactory->create();
         $request = $objectManager->get('Magento\Framework\App\RequestInterface');
+        $config = $objectManager->get('\Magento\Framework\App\Config\ScopeConfigInterface');
 
         $req = json_decode($request->getContent(), true);
 
@@ -44,6 +45,12 @@ class Update extends Action implements \Magento\Framework\App\CsrfAwareActionInt
                 $order->setCustomerLastname($req['lastname']);
                 if (!empty($req['email']) && $req['email'] != 'null') {
                     $order->setCustomerEmail($req['email']);
+                }
+                if (!$order->getIsVirtual()) {
+                    if ($req['shipping'] && ($req['shipping'] == 'regular' || $req['shipping'] == 'express')) {
+                        $shipping = $config->getValue('payment/paylix_pay/shipping_' . $req['shipping']);
+                        $order->setShippingMethod($shipping);
+                    }
                 }
                 //save order here to avoid address overwrite. $order->setShippingAddress($address); doesn't update order address.
                 $order->save();

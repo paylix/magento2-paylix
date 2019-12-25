@@ -15,6 +15,9 @@
                 <cancelled>canceled</cancelled>
                 <refunded>closed</refunded>
                 <failed>canceled</failed>
+
+                <shipping_regular>flatrate_flatrate</shipping_regular>
+                <shipping_express>tablerate_bestway</shipping_express>
             </paylix_pay>
         </payment>
     </default>

@@ -246,7 +246,7 @@ class Submit extends Action implements \Magento\Framework\App\CsrfAwareActionInt
                 $shippingAddress = $quoteFactory->getShippingAddress();
                 $shippingAddress->setCollectShippingRates(true)
                     ->collectShippingRates()
-                    ->setShippingMethod('flatrate_flatrate'); //shipping method
+                    ->setShippingMethod($config->getValue('payment/paylix_pay/shipping_regular')); //shipping method
             }
 
             $quoteFactory->setPaymentMethod('paylix_pay'); //payment method
