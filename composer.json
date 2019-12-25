@@ -2,7 +2,7 @@
   "name": "paylix/pay",
   "description": "Magento 2 Paylix extension",
   "require": {
-    
+
   },
   "type": "magento2-module",
   "version": "1.0.0",
